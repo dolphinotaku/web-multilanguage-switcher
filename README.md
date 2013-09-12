@@ -1,5 +1,5 @@
 Jquery Multilanguage Switcher 1.1 Beta
-==========================
+--------------------------
 Website to publish to the would, multi languages are indispensable.
 SME(Small and Medium Enterprises) may not allocate resources to out source / in house to make they website support multi languages.
 The company website always update in native language, but another languages information are often outdate. 
@@ -7,13 +7,13 @@ Jquery Multilanguage Switcher(JLangs) allow your vistor easy to switching differ
 
 
 Demo
-==========================
+--------------------------
 
 Installation
-==========================
+--------------------------
 
 Why JLangw??
-==========================
+--------------------------
 ### Less Bandwidth
 Switching languages without refresh, still use the same page and HTML structure, the only one change are all the displaying text.
 
@@ -24,4 +24,4 @@ If the browser find the saved languages, there will not language request send to
 you just need to open a text file, and edit the text without any complex step and computer language skills
 
 Change Log
-==========================
+--------------------------
