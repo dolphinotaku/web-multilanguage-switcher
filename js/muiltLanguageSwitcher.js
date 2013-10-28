@@ -169,6 +169,20 @@ $(function(){
 		console.log("langfolder = "+langfolder);
 		console.log("ruleLocation = "+ruleLocation);
 		
+		// if language bar hidden/display:none
+		// stop all the following Initialization
+		var isStopInitialization = false;
+		var languageBarContainer = $("#radio");
+		if(languageBarContainer.length) {
+			/* code if found */
+			if(languageBarContainer.is(":hidden") || languageBarContainer.css("display") == "none" || languageBarContainer.css("visibility") == "hidden")
+				isStopInitialization = true; 
+		} else {
+			/* code if not found */
+			isStopInitialization = true; 
+		}
+		if(isStopInitialization)
+			return;
 		getRuleFile(ruleLocation);
 		//getLanguageFile(langLocation);
 	
@@ -224,6 +238,7 @@ function backupPageLanguage(ruleJson){
 		if(selector.length >= 1){ // no matched element do nothing
 			if (selector.length > 1){ // more than one matched element (data[0][value.selector])
 				backupLanguage += "[";
+				
 					$.each(selector, function(targetElementIndex, targetElementValue){
 						backupLanguage += "\""+backupValue(this, ruleValue.method, ruleValue.arguments)+"\",";
 					});
