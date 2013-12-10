@@ -2,10 +2,16 @@
 
 	// e.g <script src='this.path'>, scriptSrc = this.path
 	var scriptSrc = "";
+	var isLoad;
+	var jqueryLanguageSwitcherJsFileName = "jqueryLanguageSwitcher.js"
 	$("script").each(function(index, element) {
-		var isFind = ($(this).attr("src").search("/supportFile.js"));
+		var isFind = $(this).attr("src");
+		console.log("Checking script = "+isFind);
+		isFind = isFind.indexOf("/"+jqueryLanguageSwitcherJsFileName);
 		if ( isFind != -1){
 			scriptSrc = $(this).attr("src");
+			console.log("Jquery Language Switcher "+jqueryLanguageSwitcherJsFileName+" linked.");
+			return false;
 		}
     });
 	
@@ -19,6 +25,7 @@
 	var nestedAmount = 0;
 	//nestedAmount = findNestedAmount(scriptSrc, 0);
 	
+	if(scriptSrc.length>1)
 	for(i=0; i<scriptSrc.length; i++){
 		var isLocalAtParentFolder = scriptSrc.indexOf(parentFolder, i);
 		//alert(isLocalAtParentFolder);
@@ -58,6 +65,11 @@ alert(nestedAmount);
 */
 	
 $(function(){
+	if(scriptSrc==""){
+		console.log("File "+jqueryLanguageSwitcherJsFileName+"have not import, stop initialization");
+		return;
+	}
+	
 	// e.g keithbox.serveehttp.com/index.html then isAbsolutePath = true
 	var isAbsolutePath = false;
 		
@@ -173,6 +185,7 @@ $(function(){
 		// stop all the following Initialization
 		var isStopInitialization = false;
 		var languageBarContainer = $("#radio");
+		var languageBarContainerID = "#radio"
 		if(languageBarContainer.length) {
 			/* code if found */
 			if(languageBarContainer.is(":hidden") || languageBarContainer.css("display") == "none" || languageBarContainer.css("visibility") == "hidden")
@@ -181,8 +194,10 @@ $(function(){
 			/* code if not found */
 			isStopInitialization = true; 
 		}
-		if(isStopInitialization)
+		if(isStopInitialization){
+			console.log("Language Button Container "+languageBarContainerID+" hidden, stop initialization");
 			return;
+		}
 		getRuleFile(ruleLocation);
 		//getLanguageFile(langLocation);
 	
@@ -208,6 +223,34 @@ $(function(){
 			getLanguageFile(langLocation);
 		}
 	});
+
+	//language buttin when click
+	$(".languageSelect2").click(function(){
+		/*
+		alert($(this).hasClass("default"));
+		if($(this).hasClass("default")){
+		
+		$.each(rule, function(index, ruleValue){
+			if($(ruleValue.selector).length >= 1){ // no matched element in page then do nothing
+				if($(ruleValue.selector).length > 1){ // more than one matched element
+					$.each($(ruleValue.selector), function(targetElementObject, targetElementValue){
+						//$(this).text(data[ruleValue.selector][targetElementObject]);
+						alert(backupLanguage[".fun_name"])
+						changeValue(this, ruleValue.method, ruleValue.arguments, backupLanguage[ruleValue.selector][targetElementObject]);
+					});
+				}else if($(ruleValue.selector).length == 1){ // only one matched element
+					changeValue(ruleValue.selector, ruleValue.method, ruleValue.arguments, backupLanguage[ruleValue.selector]);
+				}
+			}
+		});
+		}else{
+		*/
+		// get the name of language what button user press
+		//}
+	})
+	
+	// default display chinese
+	//$(".languageSelect[value='cht']").trigger('click');
 	var rule;
 function getRuleFile(ruleLocation){
 	//ruleLocation = ruleLocation.replace("localhost/localhost/", "localhost/");
@@ -238,7 +281,7 @@ function backupPageLanguage(ruleJson){
 		if(selector.length >= 1){ // no matched element do nothing
 			if (selector.length > 1){ // more than one matched element (data[0][value.selector])
 				backupLanguage += "[";
-				
+
 					$.each(selector, function(targetElementIndex, targetElementValue){
 						backupLanguage += "\""+backupValue(this, ruleValue.method, ruleValue.arguments)+"\",";
 					});
@@ -274,7 +317,7 @@ function backupValue(targetElement, method, argument){
 }
 
 function rollback(){
-	//var backupLanguageJson = $.parseJSON('{"#header_title h2":"KeithBox - a﹐?c?Re??",".fun_name":["Plants vs. Zombies Adventures","Little Fighter","Zelda","10a?§a﹐﹐c”‥e??a??"],"#author_said h4":"c??e‧·c??ec±","#update_log h4":"a?’a–°a—￥ea?","#text":"a?oa??a?‥e–?a”?a??e–“","#author_said p":[		"!NEWS!~~c?2a…§a? a…￥Facebooka?3a??c‧?e‥€i??a?¯a?￥c‧?a﹐?a? c??a¯?e2’a??e|?a€?e??a…?aR?aooa??ao?aμ?a?–e‥?e?–ao?a€?","c??a…§a?§e?‥a??aa”a!?e??c§?a?°Dropbox, Google Drive, Sky Drive, Facebook",		"e??a–?c”‥Facebook c??cμ?a?￥a”?a?€a–°e3?e‥?,a|?a? c?1c??a? c’ c?2c??ca?c??a??a??a??a??,Facebooka?¯c??e‧·a”¯a﹐€e??a°?a?–a…?a??a??a?¯c??a?°a–1"],"#full_timetable":"KeithBox3.2 a﹐?c·?a??e–“e!‥",	"#full_timetable p":["a?oa–?a??a?‥e?3a﹐…a?‥a??aRμc€?e|?e??a￥μa??i??a?￥a﹐?a??aRμa?oa??a?‥a°?a??e—?e–?a?‘a?¯i??a﹐?c??a﹐?a?…e|?c??e3?ao?aμae2?a€?","c?oe??a??c’°a??i??a?oa??a?‥a¯?a?ca?€a°‘a﹐?c·?6a°?a??i??c‥?a??a?‘a?¯a€?",	"a??e–“a??a?‧aooa??a﹐?e??c€?e|?a??c??i??a﹐?a??a1?e?‧i??a?…a-?e?’a-?a€?"],"#opening_hours p":"a??a?‥e?3a﹐…a?‥a?¯c?2c??c??a?‘a?¯a??aRμ"}');
+	//var backupLanguageJson = $.parseJSON('{"#header_title h2":"KeithBox - 主目錄",".fun_name":["Plants vs. Zombies Adventures","Little Fighter","Zelda","10大常用軟件"],"#author_said h4":"站長的話","#update_log h4":"更新日誌","#text":"伺服器開放時間","#author_said p":[		"!NEWS!~~網內加入Facebook即時留言，可以留下你的寶貴意見、與其它人作交流或討論了。","站內大部份檔案轉移到Dropbox, Google Drive, Sky Drive, Facebook",		"請善用Facebook 群組接收最新資訊,如因特發因素網站突然暫停服務,Facebook是站長唯一能對外公佈消息的地方"],"#full_timetable":"KeithBox3.2 上線時間表",	"#full_timetable p":["基於凌晨至清晨時段瀏覽量極低，以上時段伺服器將會關閉休息，減省不必要的資源浪費。","為響應環保，伺服器每天最少下線6小時，稍作休息。",	"期間任何人均不能瀏覽本站，不便之處，僅此致歉。"],"#opening_hours p":"凌晨至清晨是網站的休息時段"}');
 	$.each(rule, function(index, ruleValue){
 		if($(ruleValue.selector).length>=1){
 			console.log("========================================");

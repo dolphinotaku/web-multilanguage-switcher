@@ -13,6 +13,7 @@ Demo
 
 Installation
 --------------------------
+Jquery Language Switcher develop with Jquery 2.0.3
 
 Why JALangs??
 --------------------------
